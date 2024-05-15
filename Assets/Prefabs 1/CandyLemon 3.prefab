@@ -10,7 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: f2beb3c7f93196540bcbffa9a4a19635, type: 3}
       propertyPath: m_Name
-      value: CandyLemon
+      value: CandyLemon 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f2beb3c7f93196540bcbffa9a4a19635, type: 3}
+      propertyPath: m_TagString
+      value: Candy
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f2beb3c7f93196540bcbffa9a4a19635, type: 3}
       propertyPath: m_LocalPosition.x
