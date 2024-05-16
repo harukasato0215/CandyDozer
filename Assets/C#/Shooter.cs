@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Shooter : MonoBehaviour
 {
+    const int MaxShotPower = 5;
+    const int RecoverySeconds = 3;
+
+    int ShotPower = MaxShotPower;
+    AudioSource shotSound;
+
     public GameObject[] candyPrefabs;
     public Transform candyParentTransform;
     public CandyManager candyManager;
@@ -14,7 +20,7 @@ public class Shooter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        shotSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -43,6 +49,8 @@ public class Shooter : MonoBehaviour
         //キャンディを生成できない条件であればshotしない
         if (candyManager.GetCandyAmount() <= 0) return;
 
+        if (ShotPower <= 0) return;
+
         GameObject candy = Instantiate(SampleCandy(), GetInstantiatePosition(), Quaternion.identity);
         //生成したキャンディオブジェクトの親を登録
         candy.transform.parent = candyParentTransform;
@@ -54,6 +62,34 @@ public class Shooter : MonoBehaviour
 
         //ストック消費
         candyManager.ConsumeCandy();
+        // shotパワー消費
+        ConsumePower();
+
+        shotSound.Play();
+    }
+
+    void OnGUI()
+    {
+        GUI.color = Color.black;
+
+        string label = "";
+        for (int i = 0; i < ShotPower; i++) label = label + "+";
+
+        GUI.Label(new Rect(50, 65, 100, 30), label);
+
+
+    }
+
+    void ConsumePower()
+    {
+        ShotPower--;
+        StartCoroutine(RecoverPower());
+    }
+
+    IEnumerator RecoverPower()
+    {
+        yield return new WaitForSeconds(RecoverySeconds);
+        ShotPower++;
     }
 }
 

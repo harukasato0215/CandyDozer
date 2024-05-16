@@ -6,6 +6,8 @@ public class CandyDestroyer : MonoBehaviour
 {
     public CandyManager candyManager;
     public int reward;
+    public GameObject effectPrefab;
+    public Vector3 effectRotation;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,8 +25,17 @@ public class CandyDestroyer : MonoBehaviour
         if (other.gameObject.tag == "Candy")
         {
             candyManager.AddCandy(reward);
-
+            //オブジェクトの削除
             Destroy(other.gameObject);
+
+            if (effectPrefab != null)
+            {
+                Instantiate(
+                    effectPrefab,
+                    other.transform.position,
+                    Quaternion.Euler(effectRotation)
+                );
+            }
 
         }
     }
